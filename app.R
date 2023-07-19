@@ -3,7 +3,7 @@ library(shinythemes)
 library(reticulate)
 library(purrr)
 use_python("./env/bin/python3", required = TRUE)
-source_python("run_llama.py")
+source_python("globus_llama7b.py")
 
 # Define the UI
 ui <- navbarPage(
