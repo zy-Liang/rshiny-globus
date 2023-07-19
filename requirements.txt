@@ -1,0 +1,2 @@
+globus-compute-endpoint
+globus-automate-client
