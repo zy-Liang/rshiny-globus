@@ -27,8 +27,8 @@ def run_llama7b(prompts: list):
     print("\nPrompt(s):")
     for count, prompt in enumerate(prompts):
         print(f"Prompt {count+1}: {prompt}")
-    test_endpoint_id = 'b9d9099c-4aed-499c-a020-743041a15521'
-    with Executor(endpoint_id=test_endpoint_id) as gce:
+    llama7b_endpoint = '0b88751e-a0d8-4a2a-9e97-7d2161241510'
+    with Executor(endpoint_id=llama7b_endpoint) as gce:
         # ... then submit for execution, ...
         future = gce.submit(submit_job, prompts)
         print("\nSubmitted the function to Globus endpoint.\n")

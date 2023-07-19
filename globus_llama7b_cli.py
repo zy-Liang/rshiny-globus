@@ -23,7 +23,7 @@ def submit_job(prompts:list):
         return output.stderr.decode()
 
 
-test_endpoint_id = 'b9d9099c-4aed-499c-a020-743041a15521'
+llama7b_endpoint = '0b88751e-a0d8-4a2a-9e97-7d2161241510'
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--prompts", nargs="+")
@@ -37,7 +37,7 @@ for i in range(0, len(prompts)):
 
 
 # ... then create the executor, ...
-with Executor(endpoint_id=test_endpoint_id) as gce:
+with Executor(endpoint_id=llama7b_endpoint) as gce:
     # ... then submit for execution, ...
     future = gce.submit(submit_job, prompts)
     print("\nSubmitted the function to Globus endpoint.\n")
