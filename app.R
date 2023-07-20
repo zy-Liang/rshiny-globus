@@ -52,8 +52,13 @@ server <- function(input, output) {
   })
 
   observeEvent(input$submit, {
+    connected <- endpoint_connection()
+    if(connected == FALSE){
+      showNotification("Error: Globus endpoint offline!", type = "error")
+      return()
+    }
     prompts <- map(entry_names(), (function (id) input[[id]]))
-    showNotification("Submitted the function to Globus endpoint.")
+    showNotification("Submitted the function to Globus endpoint.", type = "message")
     result <- run_llama7b(prompts)
     output$result <- renderText(result)
 

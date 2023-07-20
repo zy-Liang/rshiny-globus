@@ -1,6 +1,5 @@
 from globus_compute_sdk import Executor
 from globus_compute_sdk import Client
-# from pprint import pprint
 import argparse
 
 
