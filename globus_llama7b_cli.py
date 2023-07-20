@@ -1,5 +1,6 @@
 from globus_compute_sdk import Executor
-from pprint import pprint
+from globus_compute_sdk import Client
+# from pprint import pprint
 import argparse
 
 
@@ -24,6 +25,11 @@ def submit_job(prompts:list):
 
 
 llama7b_endpoint = '0b88751e-a0d8-4a2a-9e97-7d2161241510'
+gcc = Client()
+endpoint_status = gcc.get_endpoint_status(llama7b_endpoint)
+# print(endpoint_status)
+if endpoint_status["status"] == "offline":
+    raise Exception("Error: Globus endpoint offline!")
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--prompts", nargs="+")
@@ -35,11 +41,9 @@ print("Your prompts:")
 for i in range(0, len(prompts)):
     print(f"prompt {i+1}: {prompts[i]}")
 
-
-# ... then create the executor, ...
+# create the executor
 with Executor(endpoint_id=llama7b_endpoint) as gce:
-    # ... then submit for execution, ...
+    # submit for execution
     future = gce.submit(submit_job, prompts)
     print("\nSubmitted the function to Globus endpoint.\n")
-    # ... and finally, wait for the result
     print(future.result())
