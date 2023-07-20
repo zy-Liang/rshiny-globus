@@ -45,6 +45,7 @@ ui <- navbarPage(
 # Define the server logic
 server <- function(input, output) {
   result <- "Error: No results available!"
+  output$result <- renderText("Thanks for visiting!\nPlease enter your prompts and click on submit.")
 
   # Generate text input boxes
   entry_names <- reactive(paste0("prompt", seq_len(input$number)))
@@ -54,14 +55,21 @@ server <- function(input, output) {
 
   # Submit button
   observeEvent(input$submit, {
+    # check Globus endpoint status
     connected <- endpoint_connection()
     if(connected == FALSE){
       showNotification("Error: Globus endpoint offline!", type = "error")
       return()
     }
+    # retrieve prompt list
     prompts <- map(entry_names(), (function (id) input[[id]]))
+    # show notifications
     showNotification("Submitted the function to Globus endpoint.", type = "message")
+    output$result <- renderText("Waiting for generation to finish.")
+    # run LLaMA
     result <- run_llama7b(prompts)
+    # show results
+    showNotification("Generation finished!", type = "message")
     output$result <- renderText(result)
   })
 
