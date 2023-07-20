@@ -30,13 +30,11 @@ ui <- navbarPage(
         ),
         numericInput("number", label = "Number of prompts", value = 1, min = 1),
         uiOutput("entries"),
-        # checkboxInput("download", "Download generation output", FALSE),
         actionButton("submit", "Submit"),
         downloadButton("download")
       ),
       mainPanel(
         h1("Output"),
-        # textOutput("message"),
         verbatimTextOutput("result")
       )
     )
@@ -46,11 +44,15 @@ ui <- navbarPage(
 
 # Define the server logic
 server <- function(input, output) {
+  result <- "Error: No results available!"
+
+  # Generate text input boxes
   entry_names <- reactive(paste0("prompt", seq_len(input$number)))
   output$entries <- renderUI({
     map(entry_names(), ~textInput(.x, label = "prompt", placeholder = "Enter your prompt here"))
   })
 
+  # Submit button
   observeEvent(input$submit, {
     connected <- endpoint_connection()
     if(connected == FALSE){
@@ -61,13 +63,13 @@ server <- function(input, output) {
     showNotification("Submitted the function to Globus endpoint.", type = "message")
     result <- run_llama7b(prompts)
     output$result <- renderText(result)
-
-    # handle file download
-    output$download <- downloadHandler(
-      filename = function() {paste0("llama7b", Sys.time(), ".txt")},
-      content = function(file) {writeLines(result, file)}
-    )
   })
+
+  # handle file download
+  output$download <- downloadHandler(
+    filename = function() {paste0("llama7b", Sys.time(), ".txt")},
+    content = function(file) {writeLines(result, file)}
+  )
 }
 
 # Run the Shiny app
