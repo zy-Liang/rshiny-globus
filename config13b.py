@@ -34,7 +34,7 @@ config = Config(
                 worker_init=user_opts['greatlakes']['worker_init'],
 
                 # Scale between 0-1 blocks with 2 nodes per block
-                nodes_per_block=1,
+                nodes_per_block=2,
                 mem_per_node=160,
                 init_blocks=0,
                 min_blocks=0,
