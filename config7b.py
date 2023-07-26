@@ -35,7 +35,7 @@ config = Config(
 
                 # Scale between 0-1 blocks with 2 nodes per block
                 nodes_per_block=1,
-                mem_per_node=160,
+                mem_per_node=100,
                 init_blocks=0,
                 min_blocks=0,
                 max_blocks=1,
