@@ -1,6 +1,7 @@
 from globus_compute_sdk import Executor
 from globus_compute_sdk import Client
 import argparse
+from datetime import datetime
 
 
 # First, define the function ...
@@ -23,7 +24,7 @@ def submit_job(prompts:list):
         return output.stderr.decode()
 
 
-llama7b_endpoint = '0b88751e-a0d8-4a2a-9e97-7d2161241510'
+llama7b_endpoint = 'c7f61570-3ef3-4161-a1ba-c4b9d11b1edf'
 gcc = Client()
 endpoint_status = gcc.get_endpoint_status(llama7b_endpoint)
 # print(endpoint_status)
@@ -44,5 +45,6 @@ for i in range(0, len(prompts)):
 with Executor(endpoint_id=llama7b_endpoint) as gce:
     # submit for execution
     future = gce.submit(submit_job, prompts)
-    print("\nSubmitted the function to Globus endpoint.\n")
+    current_time = datetime.now().strftime("%H:%M")
+    print(f"\nSubmitted the function to Globus endpoint at {current_time}.\n")
     print(future.result())
