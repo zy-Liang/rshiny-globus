@@ -48,3 +48,5 @@ with Executor(endpoint_id=llama7b_endpoint) as gce:
     current_time = datetime.now().strftime("%H:%M")
     print(f"\nSubmitted the function to Globus endpoint at {current_time}.\n")
     print(future.result())
+    current_time = datetime.now().strftime("%H:%M")
+    print(f"\nFinished at {current_time}.\n")

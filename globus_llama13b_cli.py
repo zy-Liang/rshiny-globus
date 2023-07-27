@@ -11,7 +11,7 @@ def submit_job():
     head_node = None
     if output.returncode == 0:
         head_node = output.stdout.decode().split()[0]
-        return head_node
+        # return head_node
     else:
         return output.stderr.decode()
     output = subprocess.run(["torchrun", "--nnodes", "2", "--nproc-per-node", "1",
