@@ -7,7 +7,7 @@ from parsl.addresses import address_by_interface
 user_opts = {
     'greatlakes': {
         'worker_init': 'module load gcc cuda/11.7.1 cudnn/11.7-v8.7.0 python3.9-anaconda; source /nfs/turbo/umms-dinov/LLaMA/1.0.1/bin/activate',
-        'scheduler_options': '#SBATCH --gpus=1 #SBATCH --cpus-per-task=1 #SBATCH --mem-per-cpu=160g',
+        'scheduler_options': '#SBATCH --gpus=1 #SBATCH --cpus-per-task=1 #SBATCH --mem-per-cpu=160g #SBATCH --job-name=llama7b_gl',
     }
 }
 
