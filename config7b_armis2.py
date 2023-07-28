@@ -22,7 +22,7 @@ config = Config(
             provider=SlurmProvider(
                 partition='spgpu',  # update for slurm -p --partition value
                 launcher=SrunLauncher(),
-				account='dinov99',  # update for slurm -A --account value
+				account='dinov0',  # update for slurm -A --account value
                 exclusive=False,
 
                 # string to prepend to #SBATCH blocks in the submit
