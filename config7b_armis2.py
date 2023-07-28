@@ -18,7 +18,7 @@ config = Config(
             interchange_port_range = (8888,8987),
             max_workers_per_node=2,
             worker_debug=True,
-            address=address_by_interface('eth4'),  # Great Lakes eth4 armis/lh may use different values
+            address=address_by_interface('ib0.8013'),  # specific for armis2
             provider=SlurmProvider(
                 partition='spgpu',  # update for slurm -p --partition value
                 launcher=SrunLauncher(),
@@ -27,11 +27,11 @@ config = Config(
 
                 # string to prepend to #SBATCH blocks in the submit
                 # script to the scheduler eg: '#SBATCH --constraint=knl,quad,cache'
-                scheduler_options=user_opts['greatlakes']['scheduler_options'],
+                scheduler_options=user_opts['armis2']['scheduler_options'],
 
                 # Command to be run before starting a worker, such as:
                 # 'module load Anaconda; source activate parsl_env'.
-                worker_init=user_opts['greatlakes']['worker_init'],
+                worker_init=user_opts['armis2']['worker_init'],
 
                 # Scale between 0-1 blocks with 2 nodes per block
                 nodes_per_block=1,
