@@ -43,7 +43,6 @@ def load(
         checkpoints
     ), f"Loading a checkpoint for MP={len(checkpoints)} but world size is {world_size}"
     ckpt_path = checkpoints[local_rank]
-    print("Loading")
     checkpoint = torch.load(ckpt_path, map_location="cpu")
     with open(Path(ckpt_dir) / "params.json", "r") as f:
         params = json.loads(f.read())
@@ -79,27 +78,23 @@ def main(
     generator = load(
         ckpt_dir, tokenizer_path, local_rank, world_size, max_seq_len, max_batch_size
     )
-    
-    #prompts = [
-        # For these prompts, the expected answer is the natural continuation of the prompt
-    #    prompt
-    #]
-    print("Your prompts:")
-    for i in range(0, len(prompts)):
-        print(f"prompt {i+1}: {prompts[i]}")
-    print("\n====================\n")
+
+    print("\nYour prompts:\n")
+    for index, prompt in enumerate(prompts):
+        print(f"[prompt {index+1}] {prompt}\n")
+    print("\n========================================\n")
     results = generator.generate(
         prompts, max_gen_len=512, temperature=temperature, top_p=top_p
     )
 
     for result in results:
         print(result)
-        print("\n====================\n")
+        print("\n========================================\n")
 
 
 if __name__ == "__main__":
     try:
         fire.Fire(main)
-    except error:
+    except Exception as error:
         print(error)
 

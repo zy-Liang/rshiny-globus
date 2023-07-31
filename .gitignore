@@ -2,3 +2,5 @@ env/
 __pycache__
 meeting*.md
 output*.txt
+benchmark/
+meeting/

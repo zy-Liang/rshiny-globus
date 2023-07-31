@@ -2,6 +2,7 @@ from globus_compute_sdk import Executor
 from globus_compute_sdk import Client
 import argparse
 from datetime import datetime
+import textwrap
 
 
 def gl_job(prompt_list_str: str):
@@ -37,14 +38,13 @@ endpoint_gl = 'c7f61570-3ef3-4161-a1ba-c4b9d11b1edf'
 endpoint_armis2 = '3dc2a8d4-78bf-4ca4-bb72-a9769f74e46b'
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--prompts", nargs="+")
+parser.add_argument("-p","--prompts", nargs="+")
 parser.add_argument("-c", "--cluster", nargs="?", choices=["gl", "armis2"], type=str)
 args = parser.parse_args()
 
 cluster = args.cluster
 if cluster is None:
     cluster = "gl"
-print(f"cluster: {cluster}")
 
 # Check endpoint status
 gcc = Client()
@@ -60,28 +60,35 @@ if endpoint_status["status"] != "online":
 prompts = args.prompts
 if prompts is None:
     prompts = ["The capital of France is"]
-print("Your prompts:\n")
+print("\nYour prompts:\n")
 for index, prompt in enumerate(prompts):
-    print(f"[prompt {index+1}] {prompt}")
+    print(f"[prompt {index+1}] {prompt}\n")
 
 prompt_list_str = "["
 for prompt in prompts:
     prompt_list_str += f"\"{prompt}\","
 prompt_list_str += "]"
 
-# future = None
+result = None
 if cluster == "gl":
 # create the executor
     with Executor(endpoint_id=endpoint_gl) as gce:
         future = gce.submit(gl_job, prompt_list_str)
         current_time = datetime.now().strftime("%H:%M")
         print(f"\nSubmitted to Great Lakes endpoint at {current_time}.\n")
-        print(future.result())
+        result = future.result()
+        print(result)
 elif cluster == "armis2":
     with Executor(endpoint_id=endpoint_armis2) as gce:
         future = gce.submit(armis2_job, prompt_list_str)
         current_time = datetime.now().strftime("%H:%M")
         print(f"\nSubmitted to Armis2 endpoint at {current_time}.\n")
-        print(future.result())
+        result = future.result()
+        print(result)
 current_time = datetime.now().strftime("%H:%M")
 print(f"\nFinished at {current_time}.\n")
+# current_time = datetime.now().strftime("%m%d%H%M")
+# with open(f"output{current_time}.txt", "w") as file:
+#     file.write(textwrap.fill(result, width=80, replace_whitespace=False))
+
+print(result[22])
