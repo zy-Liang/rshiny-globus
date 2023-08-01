@@ -8,7 +8,7 @@ import textwrap
 def gl_job(prompt_list_str: str):
     import subprocess
     output = subprocess.run(["torchrun", "--nproc_per_node", "1", 
-                             "/home/zyliang/llama-test/llama/benchmark.py",
+                             "/home/zyliang/llama-test/llama/run_llama.py",
                              "--prompts", prompt_list_str,
                              "--ckpt_dir", "/nfs/turbo/umms-dinov/LLaMA/1.0.1/llama/modeltoken/7B",
                              "--tokenizer_path", "/nfs/turbo/umms-dinov/LLaMA/1.0.1/llama/modeltoken/tokenizer.model"],
@@ -21,13 +21,13 @@ def gl_job(prompt_list_str: str):
 
 def armis2_job(prompt_list_str: str):
     import subprocess
-    # output = subprocess.run(["torchrun", "--nproc_per_node", "1", 
-    #                          "/home/zyliang/llama-test/llama/run_llama.py",
-    #                          "--prompts", prompt_list_str,
-    #                          "--ckpt_dir", "/nfs/turbo/umms-dinov2/LLaMA/1.0.1/llama/modeltoken/7B",
-    #                          "--tokenizer_path", "/nfs/turbo/umms-dinov2/LLaMA/1.0.1/llama/modeltoken/tokenizer.model"],
-    #                         capture_output=True)
-    output = subprocess.run(["echo", "hello"], capture_output=True)
+    output = subprocess.run(["torchrun", "--nproc_per_node", "1", 
+                             "/home/zyliang/llama-test/llama/run_llama.py",
+                             "--prompts", prompt_list_str,
+                             "--ckpt_dir", "/nfs/turbo/umms-dinov2/LLaMA/1.0.1/llama/modeltoken/7B",
+                             "--tokenizer_path", "/nfs/turbo/umms-dinov2/LLaMA/1.0.1/llama/modeltoken/tokenizer.model"],
+                            capture_output=True)
+    # output = subprocess.run(["echo", "hello"], capture_output=True)
     if output.returncode == 0:
         return output.stdout.decode()
     else:

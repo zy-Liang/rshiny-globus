@@ -58,6 +58,6 @@ with Executor(endpoint_id=llama13b_endpoint) as gce:
     print(result)
     current_time = datetime.now().strftime("%H:%M")
     print(f"\nFinished at {current_time}.\n")
-    current_time = datetime.now().strftime("%Y%m%d%H%M")
+    current_time = datetime.now().strftime("%m%d%H%M")
     with open(f"output{current_time}.txt", "w") as file:
         file.write(result)
