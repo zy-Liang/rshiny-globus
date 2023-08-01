@@ -6,7 +6,7 @@ from parsl.addresses import address_by_interface
 
 user_opts = {
     'armis2': {
-        'worker_init': 'deactivate; module purge; module load gcc cuda/11.7.1 cudnn/11.7-v8.7.0 python3.9-anaconda; source /nfs/turbo/umms-dinov2/LLaMA/1.0.1/bin/activate',
+        'worker_init': 'module purge; module load gcc cuda/11.7.1 cudnn/11.7-v8.7.0 python3.9-anaconda; source /nfs/turbo/umms-dinov2/LLaMA/1.0.1/bin/activate',
         'scheduler_options': '#SBATCH --gpus=1 #SBATCH --cpus-per-task=1 #SBATCH --mem-per-cpu=100g',
     }
 }
