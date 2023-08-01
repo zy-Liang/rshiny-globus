@@ -14,7 +14,7 @@ def submit_job():
         # return head_node
     else:
         return output.stderr.decode()
-    output = subprocess.run(["torchrun", "--nnodes", "2", "--nproc-per-node", "1",
+    output = subprocess.run(["srun", "torchrun", "--nnodes", "2", "--nproc-per-node", "1",
                              "--rdzv_id", f"{rand}",
                              "--rdzv_backend", "c10d",
                              "--rdzv_endpoint", f"{head_node}.arc-ts.umich.edu:29500",
