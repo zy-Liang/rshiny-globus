@@ -6,8 +6,8 @@ from parsl.addresses import address_by_interface
 
 user_opts = {
     'armis2': {
-        'worker_init': 'module load gcc cuda/11.7.1 cudnn/11.7-v8.7.0 python3.9-anaconda; source /nfs/turbo/umms-dinov/LLaMA/1.0.1/bin/activate',
-        'scheduler_options': '#SBATCH --gpus=1 #SBATCH --cpus-per-task=1 #SBATCH --mem-per-cpu=160g',
+        'worker_init': 'module load gcc cuda/11.7.1 cudnn/11.7-v8.7.0 python3.9-anaconda; source /nfs/turbo/umms-dinov2/LLaMA/1.0.1/bin/activate',
+        'scheduler_options': '#SBATCH --gpus=1 #SBATCH --cpus-per-task=1 #SBATCH --mem-per-cpu=100g',
     }
 }
 
@@ -18,9 +18,9 @@ config = Config(
             interchange_port_range = (8888,8987),
             max_workers_per_node=2,
             worker_debug=True,
-            address=address_by_interface('ib0.8013'),  # specific for armis2
+            address=address_by_interface('eth0'),  # specific for armis2
             provider=SlurmProvider(
-                partition='spgpu',  # update for slurm -p --partition value
+                partition='gpu',  # update for slurm -p --partition value
                 launcher=SrunLauncher(),
 				account='dinov0',  # update for slurm -A --account value
                 exclusive=False,
@@ -51,7 +51,7 @@ config = Config(
 # urn:globus:auth:identity:{user_uuid}
 # urn:globus:groups:id:{group_uuid}
 meta = {
-    "name": "gl-build-slurm",
+    "name": "armis2-build-slurm",
     "description": "",
     "organization": "",
     "department": "",

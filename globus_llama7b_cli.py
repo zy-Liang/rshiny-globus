@@ -8,7 +8,7 @@ import textwrap
 def gl_job(prompt_list_str: str):
     import subprocess
     output = subprocess.run(["torchrun", "--nproc_per_node", "1", 
-                             "/home/zyliang/llama-test/llama/run_llama.py",
+                             "/home/zyliang/llama-test/llama/benchmark.py",
                              "--prompts", prompt_list_str,
                              "--ckpt_dir", "/nfs/turbo/umms-dinov/LLaMA/1.0.1/llama/modeltoken/7B",
                              "--tokenizer_path", "/nfs/turbo/umms-dinov/LLaMA/1.0.1/llama/modeltoken/tokenizer.model"],
@@ -77,18 +77,21 @@ if cluster == "gl":
         current_time = datetime.now().strftime("%H:%M")
         print(f"\nSubmitted to Great Lakes endpoint at {current_time}.\n")
         result = future.result()
-        print(result)
 elif cluster == "armis2":
     with Executor(endpoint_id=endpoint_armis2) as gce:
         future = gce.submit(armis2_job, prompt_list_str)
         current_time = datetime.now().strftime("%H:%M")
         print(f"\nSubmitted to Armis2 endpoint at {current_time}.\n")
         result = future.result()
-        print(result)
-current_time = datetime.now().strftime("%H:%M")
-print(f"\nFinished at {current_time}.\n")
+
+# print(result)
 # current_time = datetime.now().strftime("%m%d%H%M")
 # with open(f"output{current_time}.txt", "w") as file:
 #     file.write(textwrap.fill(result, width=80, replace_whitespace=False))
 
-print(result[22])
+current_time = datetime.now().strftime("%H:%M")
+print(f"\nFinished at {current_time}.\n")
+
+identifier = "The correct answer is "
+position = result.find(identifier)
+print(result[position+len(identifier)])
