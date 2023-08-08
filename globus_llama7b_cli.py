@@ -22,10 +22,9 @@ def gl_job(prompt_list_str: str):
 def armis2_job(prompt_list_str: str):
     import subprocess
     output = subprocess.run(["torchrun", "--nproc_per_node", "1", 
-                             "/home/zyliang/llama-test/llama/run_llama.py",
-                             "--prompts", prompt_list_str,
-                             "--ckpt_dir", "/nfs/turbo/umms-dinov2/LLaMA/1.0.1/llama/modeltoken/7B",
-                             "--tokenizer_path", "/nfs/turbo/umms-dinov2/LLaMA/1.0.1/llama/modeltoken/tokenizer.model"],
+                             "/home/zyliang/llama2/llama/example_chat_completion.py",
+                             "--ckpt_dir", "/nfs/turbo/umms-dinov2/LLaMA/2.0.0/llama/modeltoken/llama-2-7b-chat",
+                             "--tokenizer_path", "/nfs/turbo/umms-dinov2/LLaMA/2.0.0/llama/modeltoken/tokenizer.model"],
                             capture_output=True)
     # output = subprocess.run(["echo", "hello"], capture_output=True)
     if output.returncode == 0:
@@ -84,7 +83,7 @@ elif cluster == "armis2":
         print(f"\nSubmitted to Armis2 endpoint at {current_time}.\n")
         result = future.result()
 
-# print(result)
+print(result)
 # current_time = datetime.now().strftime("%m%d%H%M")
 # with open(f"output{current_time}.txt", "w") as file:
 #     file.write(textwrap.fill(result, width=80, replace_whitespace=False))
@@ -92,6 +91,6 @@ elif cluster == "armis2":
 current_time = datetime.now().strftime("%H:%M")
 print(f"\nFinished at {current_time}.\n")
 
-identifier = "The correct answer is "
-position = result.find(identifier)
-print(result[position+len(identifier)])
+# identifier = "The correct answer is "
+# position = result.find(identifier)
+# print(result[position+len(identifier)])

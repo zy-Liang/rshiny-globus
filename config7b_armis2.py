@@ -6,7 +6,7 @@ from parsl.addresses import address_by_interface
 
 user_opts = {
     'armis2': {
-        'worker_init': 'module purge; module load gcc cuda/11.7.1 cudnn/11.7-v8.7.0 python3.9-anaconda; source /nfs/turbo/umms-dinov2/LLaMA/1.0.1/bin/activate',
+        'worker_init': 'module purge; module load gcc cuda/11.7.1 cudnn/11.7-v8.7.0 python/3.10.4; source /nfs/turbo/umms-dinov2/LLaMA/2.0.0/bin/activate',
         'scheduler_options': '#SBATCH --gpus=1 #SBATCH --cpus-per-task=1 #SBATCH --mem-per-cpu=100g',
     }
 }
@@ -22,7 +22,7 @@ config = Config(
             provider=SlurmProvider(
                 partition='gpu',  # update for slurm -p --partition value
                 launcher=SrunLauncher(),
-				account='dinov0',  # update for slurm -A --account value
+                                account='dinov0',  # update for slurm -A --account value
                 exclusive=False,
 
                 # string to prepend to #SBATCH blocks in the submit
