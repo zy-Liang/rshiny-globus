@@ -4,7 +4,7 @@ import argparse
 from datetime import datetime
 
 
-def submit_job():
+def gl_job():
     import subprocess, random
     rand = random.randint(10000, 20000)
     output = subprocess.run(["scontrol", "show", "hostnames"], capture_output=True)
@@ -18,11 +18,11 @@ def submit_job():
                              "--rdzv_id", f"{rand}",
                              "--rdzv_backend", "c10d",
                              "--rdzv_endpoint", f"{head_node}.arc-ts.umich.edu:29500",
-                             "/home/zyliang/llama-test/llama/example.py",
+                             "/home/zyliang/llama2/llama/example_text_completion.py",
                              "--ckpt_dir",
-                             "/ime/accounts/dinov_root/dinov0/LLaMA/1.0.1/llama/modeltoken/13B",
+                             "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/llama-2-13b-chat",
                              "--tokenizer_path",
-                             "/ime/accounts/dinov_root/dinov0/LLaMA/1.0.1/llama/modeltoken/tokenizer.model"],
+                             "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/tokenizer.model"],
                             capture_output=True)
     if output.returncode == 0:
         return output.stdout.decode()
@@ -34,7 +34,7 @@ llama13b_endpoint = '94e4a0bc-a631-4624-be82-4de917acc9dd'
 gcc = Client()
 endpoint_status = gcc.get_endpoint_status(llama13b_endpoint)
 
-if endpoint_status["status"] == "offline":
+if endpoint_status["status"] != "online":
     raise Exception("Error: Globus endpoint offline!")
 
 # parser = argparse.ArgumentParser()
@@ -50,7 +50,7 @@ if endpoint_status["status"] == "offline":
 # create the executor
 with Executor(endpoint_id=llama13b_endpoint) as gce:
     # submit for execution
-    future = gce.submit(submit_job)
+    future = gce.submit(gl_job)
     current_time = datetime.now().strftime("%H:%M")
     # future = gce.submit(submit_job, prompts)
     print(f"\nSubmitted the function to Globus endpoint at {current_time}.\n")

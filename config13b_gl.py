@@ -6,7 +6,7 @@ from parsl.addresses import address_by_interface
 
 user_opts = {
     'greatlakes': {
-        'worker_init': 'deactivate; module purge; module load gcc python3.9-anaconda; source /ime/accounts/dinov_root/dinov0/LLaMA/1.0.1/bin/activate',
+        'worker_init': 'module purge; module load gcc python; source /nfs/turbo/umms-dinov/LLaMA/2.0.0/bin/activate',
         'scheduler_options': '#SBATCH --gpus=2 #SBATCH --nodes=2 #SBATCH --ntasks=2',
     }
 }
