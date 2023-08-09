@@ -20,7 +20,7 @@ def gl_job():
                              "--rdzv_endpoint", f"{head_node}.arc-ts.umich.edu:29500",
                              "/home/zyliang/llama2/llama/example_text_completion.py",
                              "--ckpt_dir",
-                             "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/llama-2-13b-chat",
+                             "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/llama-2-13b",
                              "--tokenizer_path",
                              "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/tokenizer.model"],
                             capture_output=True)

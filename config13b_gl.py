@@ -7,7 +7,7 @@ from parsl.addresses import address_by_interface
 user_opts = {
     'greatlakes': {
         'worker_init': 'module purge; module load gcc python; source /nfs/turbo/umms-dinov/LLaMA/2.0.0/bin/activate',
-        'scheduler_options': '#SBATCH --gpus=2 #SBATCH --nodes=2 #SBATCH --ntasks=2',
+        'scheduler_options': '#SBATCH --gpus=2 #SBATCH --nodes=2 #SBATCH --ntasks=2 #SBATCH --mail-type=BEGIN,END,FAIL #SBATCH --mail-user=zyliang@umich.edu',
     }
 }
 
@@ -35,7 +35,7 @@ config = Config(
 
                 # Scale between 0-1 blocks with 2 nodes per block
                 nodes_per_block=2,
-                mem_per_node=100,
+                mem_per_node=50,
                 init_blocks=0,
                 min_blocks=0,
                 max_blocks=1,
