@@ -5,9 +5,17 @@ from parsl.launchers import SrunLauncher
 from parsl.addresses import address_by_interface
 
 user_opts = {
-    'greatlakes': {
-        'worker_init': 'module purge; module load gcc python; source /nfs/turbo/umms-dinov/LLaMA/2.0.0/bin/activate',
-        'scheduler_options': '#SBATCH --gpus=2 #SBATCH --nodes=2 #SBATCH --ntasks=2 #SBATCH --mail-type=BEGIN,END,FAIL #SBATCH --mail-user=zyliang@umich.edu',
+    "greatlakes": {
+        "worker_init": ("module purge; module load gcc python;"
+                        "source /nfs/turbo/umms-dinov/LLaMA/2.0.0/bin/activate"),
+        "scheduler_options": ("#SBATCH --gpus=2\n"
+                              "#SBATCH --nodes=2\n"
+                              "#SBATCH --ntasks=2\n"
+                              "#SBATCH --cpus-per-task=1\n"
+                              "#SBATCH --gpus-per-task=1\n"
+                              "#SBATCH --mem-per-cpu=50g\n"
+                              "#SBATCH --mail-type=BEGIN,END,FAIL\n"
+                              "#SBATCH --mail-user=zyliang@umich.edu"),
     }
 }
 
