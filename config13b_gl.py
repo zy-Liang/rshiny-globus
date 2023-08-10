@@ -15,7 +15,7 @@ user_opts = {
                               "#SBATCH --ntasks-per-node=1 "
                               "#SBATCH --cpus-per-task=1 "
                               "#SBATCH --gpus-per-task=1 "
-                              "#SBATCH --mem-per-cpu=50g "
+                              "#SBATCH --mem-per-cpu=40g "
                               "#SBATCH --mail-type=BEGIN,END,FAIL "
                               "#SBATCH --mail-user=zyliang@umich.edu"),
     }
@@ -45,7 +45,7 @@ config = Config(
 
                 # Scale between 0-1 blocks with 2 nodes per block
                 nodes_per_block=2,
-                mem_per_node=50,
+                mem_per_node=40,
                 init_blocks=0,
                 min_blocks=0,
                 max_blocks=1,
