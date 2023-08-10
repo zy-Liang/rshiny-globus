@@ -8,7 +8,9 @@ user_opts = {
     "greatlakes": {
         "worker_init": ("module purge; module load gcc python;"
                         "source /nfs/turbo/umms-dinov/LLaMA/2.0.0/bin/activate"),
-        "scheduler_options": ("#SBATCH --gpus=2\n"
+        "scheduler_options": ("#SBATCH --account=dinov99\n"
+                              "#SBATCH --partition=spgpu\n"
+                              "#SBATCH --gpus=2\n"
                               "#SBATCH --nodes=2\n"
                               "#SBATCH --ntasks=2\n"
                               "#SBATCH --cpus-per-task=1\n"
