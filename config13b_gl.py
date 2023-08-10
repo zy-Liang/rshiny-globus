@@ -8,15 +8,15 @@ user_opts = {
     "greatlakes": {
         "worker_init": ("module purge; module load gcc python;"
                         "source /nfs/turbo/umms-dinov/LLaMA/2.0.0/bin/activate"),
-        "scheduler_options": ("#SBATCH --account=dinov99 "
-                              "#SBATCH --partition=spgpu "
-                              "#SBATCH --gpus=2 "
-                              "#SBATCH --nodes=2 "
-                              "#SBATCH --ntasks-per-node=1 "
-                              "#SBATCH --cpus-per-task=1 "
-                              "#SBATCH --gpus-per-task=1 "
-                              "#SBATCH --mem-per-cpu=40g "
-                              "#SBATCH --mail-type=BEGIN,END,FAIL "
+        "scheduler_options": ("#SBATCH --account=dinov99 \n"
+                              "#SBATCH --partition=spgpu \n"
+                              "#SBATCH --gpus=2 \n"
+                              "#SBATCH --nodes=2 \n"
+                              "#SBATCH --ntasks-per-node=1 \n"
+                              "#SBATCH --cpus-per-task=1 \n"
+                              "#SBATCH --gpus-per-task=1 \n"
+                              "#SBATCH --mem-per-cpu=40g \n"
+                              "#SBATCH --mail-type=BEGIN,END,FAIL \n"
                               "#SBATCH --mail-user=zyliang@umich.edu"),
     }
 }
