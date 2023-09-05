@@ -1,8 +1,8 @@
 from globus_compute_sdk import Executor
 from globus_compute_sdk import Client
 
-
-llama7b_endpoint = '0b88751e-a0d8-4a2a-9e97-7d2161241510'
+# The most beautiful girl in the world is 
+llama7b_endpoint = '0cb81fdc-582e-453d-8db5-8d6c31150b3b'
 
 
 def submit_job(prompts:list):
@@ -13,11 +13,12 @@ def submit_job(prompts:list):
         prompt_list_str += f"\"{prompt}\","
     prompt_list_str += "]"
     # run llama with torch
+    print(f"Prompt list: {prompt_list_str}")
     output = subprocess.run(["torchrun", "--nproc_per_node", "1", 
-                             "/home/zyliang/llama-test/llama/run.py",
-                             "--prompts", prompt_list_str,
-                             "--ckpt_dir", "/nfs/turbo/umms-dinov/LLaMA/1.0.1/llama/modeltoken/7B",
-                             "--tokenizer_path", "/nfs/turbo/umms-dinov/LLaMA/1.0.1/llama/modeltoken/tokenizer.model"],
+                             "/home/tingtind/llama/example_text_completion.py",
+                            #  "--prompts", prompt_list_str,
+                             "--ckpt_dir", "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/llama-2-7b",
+                             "--tokenizer_path", "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/tokenizer.model"],
                             capture_output=True)
     if output.returncode == 0:
         return output.stdout.decode()

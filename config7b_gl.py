@@ -6,8 +6,8 @@ from parsl.addresses import address_by_interface
 
 user_opts = {
     'greatlakes': {
-        'worker_init': 'module load gcc cuda/11.7.1 cudnn/11.7-v8.7.0 python3.9-anaconda; source /nfs/turbo/umms-dinov/LLaMA/1.0.1/bin/activate',
-        'scheduler_options': '#SBATCH --gpus=1 #SBATCH --cpus-per-task=1 #SBATCH --mem-per-cpu=160g',
+        'worker_init': 'module purge; module load gcc cuda/11.7.1 cudnn/11.7-v8.7.0 python; source /nfs/turbo/umms-dinov/LLaMA/2.0.0/bin/activate',
+        'scheduler_options': '#SBATCH --gpus=1 #SBATCH --cpus-per-task=1 #SBATCH --mem-per-cpu=50g',
     }
 }
 
@@ -20,7 +20,6 @@ config = Config(
             worker_debug=True,
             address=address_by_interface('eth4'),  # Great Lakes eth4 armis/lh may use different values
             provider=SlurmProvider(
-                name='llama7b',
                 partition='spgpu',  # update for slurm -p --partition value
                 launcher=SrunLauncher(),
 				account='dinov99',  # update for slurm -A --account value
@@ -36,7 +35,7 @@ config = Config(
 
                 # Scale between 0-1 blocks with 2 nodes per block
                 nodes_per_block=1,
-                mem_per_node=100,
+                mem_per_node=50,
                 init_blocks=0,
                 min_blocks=0,
                 max_blocks=1,
