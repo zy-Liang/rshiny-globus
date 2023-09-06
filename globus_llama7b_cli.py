@@ -15,8 +15,8 @@ def submit_job(prompts:list):
     # run llama with torch
     print(f"Prompt list: {prompt_list_str}")
     output = subprocess.run(["torchrun", "--nproc_per_node", "1", 
-                             "/home/tingtind/llama/example_text_completion.py",
-                            #  "--prompts", prompt_list_str,
+                             "/home/tingtind/llama/run_llama.py",
+                             "--prompts", prompt_list_str,
                              "--ckpt_dir", "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/llama-2-7b",
                              "--tokenizer_path", "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/tokenizer.model"],
                             capture_output=True)
@@ -49,7 +49,11 @@ def run_llama7b(prompts: list):
 
 if __name__ == "__main__":
     try:
-        res = run_llama7b(["The capital of France is"])
+        res = run_llama7b([
+            "The capital of France is",
+            "The most beautiful girl in the world is",
+            "1 plus 1 is equal to"
+            ])
         print(res)
     except Exception as e:
         print(e)
