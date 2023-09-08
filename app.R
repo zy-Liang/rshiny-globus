@@ -67,7 +67,7 @@ server <- function(input, output) {
     showNotification("Submitted the function to Globus endpoint.", type = "message")
     output$result <- renderText("Waiting for generation to finish.")
     # run LLaMA
-    result <- run_llama7b(prompts)
+    result <<- run_llama7b(prompts)
     # show results
     showNotification("Generation finished!", type = "message")
     output$result <- renderText(result)

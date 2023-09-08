@@ -15,8 +15,8 @@ def submit_job(prompts:list):
     # run llama with torch
     print(f"Prompt list: {prompt_list_str}")
     output = subprocess.run(["torchrun", "--nproc_per_node", "1", 
-                             "/home/tingtind/llama/example_text_completion.py",
-                            #  "--prompts", prompt_list_str,
+                             "/home/tingtind/llama/run_llama.py",
+                             "--prompts", prompt_list_str,
                              "--ckpt_dir", "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/llama-2-7b",
                              "--tokenizer_path", "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/tokenizer.model"],
                             capture_output=True)
