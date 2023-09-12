@@ -1,2 +1,2 @@
-globus-compute-endpoint>=2.3.2
+globus-compute-endpoint
 globus-automate-client
