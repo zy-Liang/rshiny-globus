@@ -1,5 +1,6 @@
 library(shiny)
 library(shinythemes)
+library(shinybusy)
 library(reticulate)
 library(purrr)
 use_python("./env/bin/python3", required = TRUE)
@@ -8,9 +9,9 @@ source_python("globus_llama7b.py")
 # Define the UI
 ui <- navbarPage(
   theme = shinytheme("cerulean"),
-  "Globus Test",
+  "SOCR GAIM",
   tabPanel(
-    "Run LLaMA with Globus",
+    "SOCR GAIM",
     tags$head(
       tags$style(
         HTML(".shiny-notification {
@@ -25,7 +26,9 @@ ui <- navbarPage(
         h1("Input"),
         selectInput("model", "Choose a model",
           list(
-            "LLaMA 7B", "LLaMA 13B", "LLaMA 30B", "LLaMA 65B"
+            "LLaMA2-7B",
+            # TODO:
+            # "LLaMA 13B", "LLaMA 30B", "LLaMA 65B"
           )
         ),
         numericInput("number", label = "Number of prompts", value = 1, min = 1),
@@ -68,7 +71,16 @@ server <- function(input, output) {
     output$result <- renderText("Waiting for generation to finish.")
     # run LLaMA
     result <<- run_llama7b(prompts)
+    # show spinner
+    shinybusy::show_modal_spinner(
+        spin = "orbit",
+        text = paste("..."
+          #sample(jokes, 1)
+        ),
+        color = "#000000"
+      )
     # show results
+    shinybusy::remove_modal_spinner()
     showNotification("Generation finished!", type = "message")
     output$result <- renderText(result)
   })
