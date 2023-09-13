@@ -1,8 +1,8 @@
 from globus_compute_sdk import Executor
 from globus_compute_sdk import Client
 
-# The most beautiful girl in the world is 
-llama7b_endpoint = '0cb81fdc-582e-453d-8db5-8d6c31150b3b'
+
+llama7b_endpoint = open("endpoint_id_llama7b.txt").read().strip()
 
 
 def submit_job(prompts:list):
@@ -15,7 +15,7 @@ def submit_job(prompts:list):
     # run llama with torch
     print(f"Prompt list: {prompt_list_str}")
     output = subprocess.run(["torchrun", "--nproc_per_node", "1", 
-                             "/home/tingtind/llama/run_llama.py",
+                             "~/llama/run_llama.py",
                              "--prompts", prompt_list_str,
                              "--ckpt_dir", "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/llama-2-7b",
                              "--tokenizer_path", "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/tokenizer.model"],
@@ -51,7 +51,6 @@ if __name__ == "__main__":
     try:
         res = run_llama7b([
             "The capital of France is",
-            "The most beautiful girl in the world is",
             "1 plus 1 is equal to"
             ])
         print(res)

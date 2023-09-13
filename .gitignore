@@ -4,3 +4,4 @@ meeting*.md
 output*.txt
 benchmark/
 meeting/
+endpoint_id*.txt
