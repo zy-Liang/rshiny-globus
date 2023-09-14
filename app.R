@@ -57,9 +57,6 @@ server <- function(input, output) {
     }
     # retrieve prompt list
     prompts <- map(entry_names(), (function (id) input[[id]]))
-    # show notifications
-    # showNotification("Submitted the function to Globus endpoint.", type = "message")
-    # output$result <- renderText("Waiting for generation to finish.")
     # show spinner
     show_modal_spinner(
         spin = "semipolar",
@@ -70,7 +67,6 @@ server <- function(input, output) {
     result <<- run_llama7b(prompts)
     # show results
     remove_modal_spinner()
-    showNotification("Generation finished!", type = "message")
     output$result <- renderText(result)
   })
 
