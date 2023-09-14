@@ -11,7 +11,7 @@ ui <- navbarPage(
   theme = shinytheme("cerulean"),
   "SOCR GAIM",
   tabPanel(
-    "SOCR GAIM",
+    "Models",
     tags$head(
       tags$style(
         HTML(".shiny-notification {
@@ -26,7 +26,7 @@ ui <- navbarPage(
         h1("Input"),
         selectInput("model", "Choose a model",
           list(
-            "LLaMA2-7B",
+            "LLaMA 2 7B" #,
             # TODO:
             # "LLaMA 13B", "LLaMA 30B", "LLaMA 65B"
           )
@@ -69,18 +69,16 @@ server <- function(input, output) {
     # show notifications
     showNotification("Submitted the function to Globus endpoint.", type = "message")
     output$result <- renderText("Waiting for generation to finish.")
-    # run LLaMA
-    result <<- run_llama7b(prompts)
     # show spinner
-    shinybusy::show_modal_spinner(
-        spin = "orbit",
-        text = paste("..."
-          #sample(jokes, 1)
-        ),
+    show_modal_spinner(
+        spin = "semipolar",
+        text = paste("Running model..."),
         color = "#000000"
       )
+    # run LLaMA
+    result <<- run_llama7b(prompts)
     # show results
-    shinybusy::remove_modal_spinner()
+    remove_modal_spinner()
     showNotification("Generation finished!", type = "message")
     output$result <- renderText(result)
   })
