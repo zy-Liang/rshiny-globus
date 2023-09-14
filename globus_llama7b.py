@@ -5,7 +5,9 @@ llama7b_endpoint = open("endpoint_id_llama7b.txt").read().strip()
 
 
 def submit_job(prompts:list):
-    import subprocess
+    import subprocess, pathlib
+    home = pathlib.Path.home()
+    run_llama = home / "llama" / "run_llama.py"
     # process prompt list
     prompt_list_str = "["
     for prompt in prompts:
@@ -14,7 +16,7 @@ def submit_job(prompts:list):
     # run llama with torch
     print(f"Prompt list: {prompt_list_str}")
     output = subprocess.run(["torchrun", "--nproc_per_node", "1", 
-                             "/home/tingtind/llama/run_llama.py",
+                             str(run_llama),
                              "--prompts", prompt_list_str,
                              "--ckpt_dir", "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/llama-2-7b",
                              "--tokenizer_path", "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/tokenizer.model"],
