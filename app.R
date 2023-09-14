@@ -1,14 +1,17 @@
 library(shiny)
-library(shinythemes)
+# library(shinythemes)
+library(bslib)
 library(shinybusy)
 library(reticulate)
 library(purrr)
+
 use_python("./env/bin/python3", required = TRUE)
 source_python("globus_llama7b.py")
 
 # Define the UI
 ui <- navbarPage(
-  theme = shinytheme("cerulean"),
+  # theme = shinytheme("cerulean"),
+  theme = bs_theme(version = 4, bootswatch = "litera"),
   "SOCR GAIM",
   tabPanel(
     "Models",
@@ -17,7 +20,7 @@ ui <- navbarPage(
         h1("Input"),
         selectInput("model", "Choose a model",
           list(
-            "LLaMA 2 7B" #,
+            "LLaMA 2-7B" #,
             # TODO:
             # "LLaMA 13B", "LLaMA 30B", "LLaMA 65B"
           )
@@ -39,7 +42,13 @@ ui <- navbarPage(
 # Define the server logic
 server <- function(input, output) {
   result <- "Error: No results available!"
-  output$result <- renderText("Thanks for visiting!\nPlease enter your prompts and click on submit.")
+  output$result <- renderText(
+    paste(
+    "Thanks for using SOCR GAIM!\n\n",
+    "Please enter your prompts and click on submit.\n\n",
+    "Have fun!"
+    )
+  )
 
   # Generate text input boxes
   entry_names <- reactive(paste0("prompt", seq_len(input$number)))
@@ -59,10 +68,10 @@ server <- function(input, output) {
     prompts <- map(entry_names(), (function (id) input[[id]]))
     # show spinner
     show_modal_spinner(
-        spin = "semipolar",
-        text = paste("Running model..."),
-        color = "#000000"
-      )
+      spin = "semipolar",
+      text = paste("Running model..."),
+      color = "#000000",
+    )
     # run LLaMA
     result <<- run_llama7b(prompts)
     # show results
