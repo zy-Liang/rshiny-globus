@@ -12,15 +12,6 @@ ui <- navbarPage(
   "SOCR GAIM",
   tabPanel(
     "Models",
-    tags$head(
-      tags$style(
-        HTML(".shiny-notification {
-             position:fixed;
-             top: calc(10%);
-             left: calc(50%);}"
-        )
-      )
-    ),
     sidebarLayout(
       sidebarPanel(
         h1("Input"),
