@@ -31,8 +31,10 @@ def main(
     )
     print("\n==================================\n")
     for prompt, result in zip(prompts, results):
+        print("[User prompt]")
         print(prompt)
-        print(f"> {result['generation']}")
+        print("[Model output]")
+        print(f"{result['generation']}")
         print("\n==================================\n")
 
 
