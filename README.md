@@ -10,4 +10,7 @@
 
 ## Web Server Setup
 
-In this repository, create a file `endpoint_id_llama7b.txt`, add the endpoint id to the file.
+In this repository,
+- create a file `endpoint_id_llama7b.txt`, add the endpoint id to the file
+- Install python requirements in the file `py_requirements.txt`
+- Install R requirements
