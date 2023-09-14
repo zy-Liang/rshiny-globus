@@ -1,8 +1,7 @@
 from globus_compute_sdk import Executor
 from globus_compute_sdk import Client
 
-# The most beautiful girl in the world is 
-llama7b_endpoint = '0cb81fdc-582e-453d-8db5-8d6c31150b3b'
+llama7b_endpoint = open("endpoint_id_llama7b.txt").read().strip()
 
 
 def submit_job(prompts:list):
