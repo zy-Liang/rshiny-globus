@@ -5,7 +5,7 @@ llama7b_endpoint = open("endpoint_id_llama7b.txt").read().strip()
 
 
 def submit_job(prompts:list):
-    import subprocess, pathlib
+    import subprocess, pathlib, json
     home = pathlib.Path.home()
     run_llama = home / "llama" / "run_llama.py"
     # process prompt list
@@ -22,10 +22,13 @@ def submit_job(prompts:list):
                              "--tokenizer_path", "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/tokenizer.model"],
                             capture_output=True)
     if output.returncode == 0:
-        return output.stdout.decode()
+        res = output.stdout.decode().split("\n")[4]
+        res = "{'status': 'ok', " + res[1:]
+        return res
     else:
-        return output.stderr.decode()
-
+        err = output.stderr.decode()
+        dic = {"status": "error", "results": err}
+        return str(dic)
 
 def endpoint_connection():
     # Check the status of the endpoint

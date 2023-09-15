@@ -29,13 +29,18 @@ def main(
         temperature=temperature,
         top_p=top_p,
     )
-    print("\n==================================\n")
+    # print("\n==================================\n")
+    # for prompt, result in zip(prompts, results):
+    #     print("[User prompt]")
+    #     print(prompt)
+    #     print("\n[Model output]")
+    #     print(f"{result['generation']}")
+    #     print("\n==================================\n")
+    res_list = []
     for prompt, result in zip(prompts, results):
-        print("[User prompt]")
-        print(prompt)
-        print("\n[Model output]")
-        print(f"{result['generation']}")
-        print("\n==================================\n")
+        res_list.append({"prompt": prompt, "generation": result["generation"]})
+    res = {"results": res_list}
+    print(res)
 
 
 if __name__ == "__main__":

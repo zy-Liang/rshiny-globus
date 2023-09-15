@@ -17,7 +17,7 @@ ui <- navbarPage(
     "Models",
     sidebarLayout(
       sidebarPanel(
-        h1("Input"),
+        h3("Input"),
         selectInput("model", "Choose a model",
           list(
             "LLaMA 2-7B" #,
@@ -31,7 +31,7 @@ ui <- navbarPage(
         downloadButton("download")
       ),
       mainPanel(
-        h1("Output"),
+        h2("Output"),
         verbatimTextOutput("result")
       )
     )
@@ -43,7 +43,7 @@ ui <- navbarPage(
 server <- function(input, output) {
   result <- "Error: No results available!"
   output$result <- renderText(
-    paste(
+    paste0(
     "Thanks for using SOCR GAIM!\n\n",
     "Please enter your prompts and click on submit.\n\n",
     "Have fun!"
