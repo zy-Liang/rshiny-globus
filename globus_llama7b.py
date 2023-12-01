@@ -3,7 +3,7 @@ from globus_compute_sdk import Client
 
 llama7b_endpoint = open("endpoint_id_llama7b.txt").read().strip()
 
-
+# this function will be run on the remote endpoint
 def submit_job(prompts:list):
     import subprocess, pathlib, json
     home = pathlib.Path.home()
@@ -20,7 +20,7 @@ def submit_job(prompts:list):
                              "--prompts", prompt_list_str,
                              "--ckpt_dir", "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/llama-2-7b",
                              "--tokenizer_path", "/nfs/turbo/umms-dinov/LLaMA/2.0.0/llama/modeltoken/tokenizer.model"],
-                            capture_output=True)
+                            capture_output=True) # run llama with torch
     if output.returncode == 0:
         res = output.stdout.decode().split("\n")[4]
         res = "{'status': 'ok', " + res[1:]

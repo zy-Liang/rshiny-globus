@@ -53,13 +53,15 @@ server <- function(input, output) {
   # Generate text input boxes
   entry_names <- reactive(paste0("prompt", seq_len(input$number)))
   output$entries <- renderUI({
-    map(entry_names(), ~textInput(.x, label = "prompt", placeholder = "Enter your prompt here"))
+    map(entry_names(), ~textInput(.x, label = "prompt", placeholder = "Enter your prompt here")) # using map to 
   })
 
   # Submit button
   observeEvent(input$submit, {
     # check Globus endpoint status
-    connected <- endpoint_connection()
+    connected <- endpoint_connection() 
+    # this is a function from globus_llama7b.py, 
+    # which returns TRUE if the endpoint is online
     if(connected == FALSE){
       showNotification("Error: Globus endpoint offline!", type = "error")
       return()
